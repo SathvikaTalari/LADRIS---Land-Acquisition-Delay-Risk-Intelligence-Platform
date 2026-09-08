@@ -1,0 +1,168 @@
+"""
+LADRIS — FastAPI Application Entry Point
+"""
+import time
+from contextlib import asynccontextmanager
+from datetime import datetime, timezone
+
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+
+from app.api.v1.router import api_router
+from app.config import get_settings
+from app.database import Base, engine, check_db_connection
+from app.models import *  # ensure all models registered
+from app.schemas.common import HealthCheck
+
+settings = get_settings()
+
+
+from app.database import AsyncSessionLocal
+from app.services.auth_service import hash_password
+from app.models.user import User, UserRole
+from sqlalchemy import select
+
+
+async def ensure_default_users():
+    """Ensure default system accounts exist with valid hashed passwords."""
+    try:
+        async with AsyncSessionLocal() as session:
+            default_hash = hash_password("admin123")
+
+            # 1. Admin account
+            res = await session.execute(select(User).where(User.email == "admin@ladris.gov.in"))
+            admin = res.scalar_one_or_none()
+            if not admin:
+                admin = User(
+                    email="admin@ladris.gov.in",
+                    full_name="System Administrator",
+                    hashed_password=default_hash,
+                    role=UserRole.SUPER_ADMIN,
+                    is_active=True,
+                    is_verified=True,
+                )
+                session.add(admin)
+            else:
+                admin.hashed_password = default_hash
+
+            # 2. Officer account
+            res = await session.execute(select(User).where(User.email == "officer@ladris.gov.in"))
+            officer = res.scalar_one_or_none()
+            if not officer:
+                officer = User(
+                    email="officer@ladris.gov.in",
+                    full_name="Test Officer",
+                    hashed_password=default_hash,
+                    role=UserRole.PROJECT_OFFICER,
+                    is_active=True,
+                    is_verified=True,
+                )
+                session.add(officer)
+            else:
+                officer.hashed_password = default_hash
+
+            await session.commit()
+            print("   ✅ Default user accounts verified (admin & officer)")
+    except Exception as e:
+        print(f"   ⚠️ Could not seed default users: {e}")
+
+
+# ─── Lifespan (startup/shutdown) ──────────────────────────────────────────────
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Application lifespan: startup checks and graceful shutdown."""
+    print(f"🚀 {settings.APP_NAME} v{settings.APP_VERSION} starting up...")
+    print(f"   Environment: {settings.APP_ENV}")
+    try:
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+        print("   ✅ Database tables & PostGIS schema verified")
+    except Exception as e:
+        print(f"   ⚠️  Database auto-migration warning: {e}")
+    db_ok = await check_db_connection()
+    if db_ok:
+        print("   ✅ Database connection: OK")
+        await ensure_default_users()
+    else:
+        print("   ⚠️  Database connection: FAILED — check DB service")
+    yield
+    print(f"🛑 {settings.APP_NAME} shutting down...")
+
+
+# ─── Application Factory ──────────────────────────────────────────────────────
+app = FastAPI(
+    title=settings.APP_NAME,
+    description=(
+        "AI-Powered Land Acquisition Early-Warning & Intervention Intelligence Platform. "
+        "Phase 1: Technical Foundation. ML prediction engine available in Phase 2."
+    ),
+    version=settings.APP_VERSION,
+    docs_url="/docs",
+    redoc_url="/redoc",
+    openapi_url="/openapi.json",
+    lifespan=lifespan,
+)
+
+# ─── CORS ─────────────────────────────────────────────────────────────────────
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=["X-Request-ID", "X-Process-Time"],
+)
+
+
+# ─── Request Timing Middleware ─────────────────────────────────────────────────
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.perf_counter()
+    response = await call_next(request)
+    process_time_ms = int((time.perf_counter() - start_time) * 1000)
+    response.headers["X-Process-Time"] = f"{process_time_ms}ms"
+    return response
+
+
+# ─── Health & Readiness Check ───────────────────────────────────────────────────
+@app.get("/health", response_model=HealthCheck, tags=["System"])
+async def health_check() -> HealthCheck:
+    """
+    System health check.
+    Returns database connectivity status and application metadata.
+    """
+    db_ok = await check_db_connection()
+    return HealthCheck(
+        status="healthy" if db_ok else "degraded",
+        version=settings.APP_VERSION,
+        environment=settings.APP_ENV,
+        database="connected" if db_ok else "unreachable",
+        timestamp=datetime.now(tz=timezone.utc),
+    )
+
+@app.get("/ready", tags=["System"])
+async def readiness_check():
+    """
+    Readiness probe for orchestration.
+    """
+    db_ok = await check_db_connection()
+    if db_ok:
+        return {"status": "ready"}
+    else:
+        return JSONResponse(status_code=503, content={"status": "not_ready", "reason": "db_unreachable"})
+
+
+# ─── Root Redirect ────────────────────────────────────────────────────────────
+@app.get("/", include_in_schema=False)
+async def root():
+    return JSONResponse({
+        "name": settings.APP_NAME,
+        "version": settings.APP_VERSION,
+        "docs": "/docs",
+        "health": "/health",
+    })
+
+
+# ─── Mount API Router ─────────────────────────────────────────────────────────
+app.include_router(api_router)

@@ -1,0 +1,98 @@
+/**
+ * LADRIS — Zustand Auth Store
+ */
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+import type { User } from '@/types'
+import { authAPI } from '@/api/client'
+
+interface AuthState {
+  user: User | null
+  isAuthenticated: boolean
+  isLoading: boolean
+  error: string | null
+
+  login: (email: string, password: string) => Promise<void>
+  logout: () => void
+  fetchMe: () => Promise<void>
+  clearError: () => void
+}
+
+export function getRoleDefaultPath(role?: string): string {
+  switch (role) {
+    case 'SUPER_ADMIN':
+      return '/admin'
+    case 'LA_OFFICER':
+    case 'PROJECT_OFFICER':
+      return '/la-workbench'
+    case 'PROJECT_AGENCY':
+      return '/agency-portal'
+    case 'POLICY_ANALYST':
+    case 'ANALYST':
+      return '/intelligence'
+    case 'CENTRAL_ADMIN':
+    case 'STATE_ADMIN':
+    case 'DISTRICT_OFFICER':
+    case 'VIEWER':
+    default:
+      return '/dashboard'
+  }
+}
+
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      isAuthenticated: false,
+      isLoading: false,
+      error: null,
+
+      login: async (email: string, password: string) => {
+        set({ isLoading: true, error: null })
+        try {
+          const tokens = await authAPI.login({ email, password })
+          localStorage.setItem('access_token', tokens.access_token)
+          localStorage.setItem('refresh_token', tokens.refresh_token)
+          const user = await authAPI.me()
+          set({ user, isAuthenticated: true, isLoading: false })
+        } catch (err: unknown) {
+          const message =
+            (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail ||
+            'Login failed. Please check your credentials.'
+          set({ error: message, isLoading: false, isAuthenticated: false })
+          throw err
+        }
+      },
+
+      logout: () => {
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+        set({ user: null, isAuthenticated: false, error: null })
+      },
+
+      fetchMe: async () => {
+        const token = localStorage.getItem('access_token')
+        if (!token) {
+          set({ user: null, isAuthenticated: false, isLoading: false })
+          return
+        }
+        try {
+          set({ isLoading: true })
+          const user = await authAPI.me()
+          set({ user, isAuthenticated: true, isLoading: false })
+        } catch {
+          set({ user: null, isAuthenticated: false, isLoading: false })
+          localStorage.removeItem('access_token')
+          localStorage.removeItem('refresh_token')
+        }
+      },
+
+      clearError: () => set({ error: null }),
+    }),
+    {
+      name: 'ladris-auth',
+      partialize: (state) => ({ user: state.user, isAuthenticated: state.isAuthenticated }),
+    }
+  )
+)
+

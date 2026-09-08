@@ -1,0 +1,9 @@
+"""
+LADRIS — Models Package Init
+Import all models here so Alembic can discover them.
+"""
+from app.models.user import User, UserRole  # noqa: F401
+from app.models.project import Project, ProjectStatus, ProjectType, AcquisitionAct, RiskLevel  # noqa: F401
+from app.models.stage import ProjectStage, StageName, StageStatus  # noqa: F401
+from app.models.misc import Alert, AuditLog, DataSource, AlertType, AlertSeverity, AlertStatus, DataStatus  # noqa: F401
+from app.models.ml_models import MLModelRegistry, DataQualitySnapshot, PredictionStatus, MLModelType, ProjectRiskSnapshot  # noqa: F401

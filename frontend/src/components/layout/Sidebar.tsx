@@ -1,0 +1,341 @@
+/**
+ * LADRIS — Premium Sidebar Navigation
+ */
+import { NavLink } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  LayoutDashboard,
+  FolderKanban,
+  Map,
+  BarChart3,
+  Bell,
+  Database,
+  Settings,
+  ChevronLeft,
+  ChevronRight,
+  Activity,
+  Brain,
+  ShieldCheck,
+  Briefcase,
+  Building2,
+} from 'lucide-react'
+import { useAuthStore } from '@/store/authStore'
+import { roleLabel } from '@/utils'
+
+
+interface SidebarProps {
+  collapsed: boolean
+  onToggle: () => void
+}
+
+export function Sidebar({ collapsed, onToggle }: SidebarProps) {
+  const { user } = useAuthStore()
+  const isAdmin = user?.role === 'SUPER_ADMIN' || user?.role === 'CENTRAL_ADMIN' || user?.role === 'STATE_ADMIN'
+
+  const navItems = [
+    { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+  ]
+
+  if (user?.role === 'LA_OFFICER' || user?.role === 'PROJECT_OFFICER') {
+    navItems.push({ to: '/la-workbench', icon: Briefcase, label: 'LA Workbench' })
+  }
+  if (user?.role === 'PROJECT_AGENCY') {
+    navItems.push({ to: '/agency-portal', icon: Building2, label: 'Agency Portal' })
+  }
+
+  navItems.push(
+    { to: '/priority-intelligence', icon: Activity, label: 'Priority Intelligence' },
+    { to: '/intelligence', icon: Brain, label: 'Decision Intelligence' },
+    { to: '/projects', icon: FolderKanban, label: 'Projects' },
+    { to: '/gis', icon: Map, label: 'GIS Map' },
+    { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+    { to: '/alerts', icon: Bell, label: 'Alerts' },
+    { to: '/data-sources', icon: Database, label: 'Data Sources' },
+    { to: '/data-quality', icon: ShieldCheck, label: 'Data Quality' },
+  )
+
+  const adminItems = [{ to: '/admin', icon: Settings, label: 'Admin' }]
+
+
+  return (
+    <motion.aside
+      animate={{ width: collapsed ? 68 : 252 }}
+      transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
+      style={{
+        position: 'fixed',
+        left: 0, top: 0, bottom: 0,
+        zIndex: 50,
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Brand / Logo Area */}
+      <div style={{
+        height: 'var(--topnav-height)',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '0 14px',
+        gap: 11,
+        flexShrink: 0,
+        borderBottom: '1px solid rgba(64,128,255,0.08)',
+      }}>
+        {/* Logo mark */}
+        <div style={{
+          width: 36, height: 36,
+          borderRadius: 10,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
+          overflow: 'hidden',
+          background: 'rgba(14,22,40,0.85)',
+          border: '1px solid rgba(64,128,255,0.25)',
+          boxShadow: '0 2px 10px rgba(0,0,0,0.35)',
+          padding: 2,
+        }}>
+          <img
+            src="/logo.png"
+            alt="LADRIS Logo"
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+          />
+        </div>
+        <AnimatePresence>
+          {!collapsed && (
+            <motion.div
+              initial={{ opacity: 0, x: -6 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -6 }}
+              transition={{ duration: 0.15 }}
+            >
+              <div style={{
+                fontSize: '0.9375rem',
+                fontWeight: 800,
+                color: 'var(--color-text-primary)',
+                lineHeight: 1.15,
+                letterSpacing: '-0.02em',
+              }}>
+                LADRIS
+              </div>
+              <div style={{
+                fontSize: '0.6rem',
+                color: 'var(--color-accent-primary)',
+                fontWeight: 700,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                marginTop: 1,
+              }}>
+                Intelligence Platform
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Navigation */}
+      <nav style={{
+        flex: 1,
+        padding: '10px 8px',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+      }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {navItems.map(({ to, icon: Icon, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              title={collapsed ? label : undefined}
+              style={{ textDecoration: 'none' }}
+            >
+              {({ isActive }) => (
+                <motion.div
+                  whileHover={{ x: collapsed ? 0 : 3 }}
+                  transition={{ duration: 0.12 }}
+                  className={`nav-item ${isActive ? 'active' : ''}`}
+                  style={{
+                    justifyContent: collapsed ? 'center' : 'flex-start',
+                    padding: collapsed ? '10px' : undefined,
+                  }}
+                >
+                  <Icon
+                    size={17}
+                    className="nav-item-icon"
+                    style={{
+                      flexShrink: 0,
+                      opacity: isActive ? 1 : 0.7,
+                    }}
+                  />
+                  <AnimatePresence>
+                    {!collapsed && (
+                      <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.12 }}
+                      >
+                        {label}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              )}
+            </NavLink>
+          ))}
+        </div>
+
+        {/* Admin Section */}
+        {isAdmin && (
+          <>
+            <div style={{
+              height: 1,
+              background: 'rgba(64,128,255,0.08)',
+              margin: '10px 4px',
+            }} />
+            {!collapsed && (
+              <div style={{
+                fontSize: '0.6rem',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.12em',
+                color: 'rgba(64,128,255,0.5)',
+                padding: '4px 12px',
+                marginBottom: 4,
+              }}>
+                Administration
+              </div>
+            )}
+            {adminItems.map(({ to, icon: Icon, label }) => (
+              <NavLink key={to} to={to} style={{ textDecoration: 'none' }}>
+
+                {({ isActive }) => (
+                  <motion.div
+                    whileHover={{ x: collapsed ? 0 : 3 }}
+                    transition={{ duration: 0.12 }}
+                    className={`nav-item ${isActive ? 'active' : ''}`}
+                    style={{
+                      justifyContent: collapsed ? 'center' : 'flex-start',
+                      padding: collapsed ? '10px' : undefined,
+                    }}
+                  >
+                    <Icon size={17} style={{ flexShrink: 0, opacity: isActive ? 1 : 0.7 }} />
+                    <AnimatePresence>
+                      {!collapsed && (
+                        <motion.span
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                        >
+                          {label}
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                )}
+              </NavLink>
+            ))}
+          </>
+        )}
+      </nav>
+
+      {/* User Profile Footer */}
+      {user && (
+        <div style={{
+          padding: '10px 8px',
+          borderTop: '1px solid rgba(64,128,255,0.08)',
+          flexShrink: 0,
+        }}>
+          <div
+            className="nav-item"
+            style={{
+              justifyContent: collapsed ? 'center' : 'flex-start',
+              padding: collapsed ? '10px' : undefined,
+              cursor: 'default',
+              background: 'rgba(64,128,255,0.05)',
+              border: '1px solid rgba(64,128,255,0.1)',
+            }}
+          >
+            {/* Avatar */}
+            <div style={{
+              width: 32, height: 32,
+              borderRadius: '50%',
+              background: 'linear-gradient(135deg, rgba(64,128,255,0.3) 0%, rgba(124,92,252,0.3) 100%)',
+              border: '1.5px solid rgba(64,128,255,0.3)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '0.75rem',
+              fontWeight: 800,
+              color: '#7daaff',
+              flexShrink: 0,
+              boxShadow: '0 0 10px rgba(64,128,255,0.15)',
+            }}>
+              {user.full_name.charAt(0).toUpperCase()}
+            </div>
+            <AnimatePresence>
+              {!collapsed && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  style={{ overflow: 'hidden', minWidth: 0 }}
+                >
+                  <div style={{
+                    fontSize: '0.8125rem',
+                    fontWeight: 600,
+                    color: 'var(--color-text-primary)',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}>
+                    {user.full_name}
+                  </div>
+                  <div style={{
+                    fontSize: '0.65rem',
+                    color: 'var(--color-accent-primary)',
+                    whiteSpace: 'nowrap',
+                    fontWeight: 600,
+                    letterSpacing: '0.04em',
+                  }}>
+                    {roleLabel(user.role)}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      )}
+
+      {/* Collapse Toggle */}
+      <button
+        onClick={onToggle}
+        style={{
+          position: 'absolute',
+          bottom: 88,
+          right: -13,
+          width: 26, height: 26,
+          borderRadius: '50%',
+          background: 'var(--color-bg-elevated)',
+          border: '1px solid var(--color-border-default)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          color: 'var(--color-text-muted)',
+          zIndex: 10,
+          boxShadow: 'var(--shadow-sm)',
+          transition: 'all 0.15s',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.borderColor = 'var(--color-border-strong)'
+          e.currentTarget.style.color = 'var(--color-accent-primary)'
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.borderColor = 'var(--color-border-default)'
+          e.currentTarget.style.color = 'var(--color-text-muted)'
+        }}
+      >
+        {collapsed ? <ChevronRight size={13} /> : <ChevronLeft size={13} />}
+      </button>
+    </motion.aside>
+  )
+}

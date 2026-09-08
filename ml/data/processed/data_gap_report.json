@@ -1,0 +1,77 @@
+{
+  "title": "LandPulse AI — Multi-Source Integration & Data Gap Report",
+  "updated_at": "2026-09-04T14:15:00.000000+00:00",
+  "version": "2.0.0",
+  "summary": "This document outlines the authoritative data provenance strategy for LandPulse AI across BhoomiRashi, Data.gov.in, eCourts, LACRRIS, and GIS layers. Real public data is prioritized, derived indicators are explicitly tagged, and non-public government fields are transparently documented as acknowledged data gaps.",
+  "data_sources_status": [
+    {
+      "source": "BhoomiRashi Portal (bhoomirashi.gov.in)",
+      "status": "OFFICIAL_PUBLIC",
+      "records_count": 56,
+      "fields_available": [
+        "state",
+        "district",
+        "agency",
+        "land_required_ha",
+        "sanctioned_la_cost_crore",
+        "notification_3a_date",
+        "notification_3d_date"
+        
+      ],
+      "provenance_label": "OFFICIAL_PUBLIC",
+      "notes": "Real gazette notification dates and project structural parameters directly ingested."
+    },
+    {
+      "source": "Open Government Data Platform (data.gov.in / MoSPI)",
+      "status": "OFFICIAL_PUBLIC",
+      "records_count": 10,
+      "fields_available": [
+        "project_code",
+        "name",
+        "state_code",
+        "district_codes",
+        "total_area_ha",
+        "estimated_compensation_inr",
+        "affected_families",
+        "delay_months",
+        "delay_reason",
+        "planned_start_date",
+        "target_completion_date"
+      ],
+      "provenance_label": "OFFICIAL_PUBLIC",
+      "notes": "Real official infrastructure project delay records across 2021-2025 reporting periods."
+    },
+    {
+      "source": "eCourts Services (services.ecourts.gov.in)",
+      "status": "DERIVED_ADAPTER",
+      "provenance_label": "DERIVED_ECOURTS",
+      "strategy": "DerivedECourtsAdapter extracts legal dispute signals from official delay reason texts and district legal risk priors. Adapter Interface pattern allows future authorized NAPIX/eCourts API pluggability.",
+      "notes": "No live unauthenticated scraping. Legal case counts and status are derived and labeled explicitly."
+    },
+    {
+      "source": "LACRRIS — Dept of Land Resources (lacrris.nic.in)",
+      "status": "PLANNED_PRODUCTION_INTEGRATION",
+      "provenance_label": "PLANNED_LACRRIS",
+      "fields_unavailable": [
+        "project_level_disbursed_compensation_breakdown",
+        "family_level_rehabilitation_milestones",
+        "possession_handover_certificates"
+      ],
+      "notes": "Treat as planned production government integration. Unavailable fields are documented as an acknowledged data gap rather than claimed as live."
+    },
+    {
+      "source": "GIS & Boundaries Layer",
+      "status": "HYBRID_GIS",
+      "provenance_label": "OFFICIAL_PUBLIC",
+      "strategy": "State and District choropleth maps implemented using official Survey of India / GADM boundaries overlaid with verified project lat/lng points. PostGIS database schema prepared for future parcel and corridor polyline layers.",
+      "notes": "No synthetic corridor geometries are generated."
+    }
+  ],
+  "data_provenance_tier_definitions": {
+    "OFFICIAL_PUBLIC": "Data extracted directly from official open government portals, gazette notifications, or MoSPI reports.",
+    "DERIVED_ECOURTS": "Legal indicators derived heuristically from official delay documentation via DerivedECourtsAdapter.",
+    "SYNTHETIC_DEMO": "Physics-constrained fallback fields generated for non-public stage milestones, clearly tagged in UI and DB.",
+    "PLANNED_LACRRIS": "Fields reserved for future authenticated LACRRIS agency integration."
+  },
+  "integrity_statement": "LandPulse AI maintains strict data transparency. Every metric, map point, and ML risk input displays its data provenance badge. System limitations are acknowledged in accordance with public sector data governance standards."
+}
