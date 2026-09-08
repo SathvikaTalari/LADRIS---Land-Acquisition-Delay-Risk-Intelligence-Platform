@@ -21,7 +21,7 @@ settings = get_settings()
 from app.database import AsyncSessionLocal
 from app.services.auth_service import hash_password
 from app.models.user import User, UserRole
-from sqlalchemy import select
+from sqlalchemy import select, text
 
 
 async def ensure_default_users():
@@ -75,8 +75,35 @@ async def lifespan(app: FastAPI):
     print(f"🚀 {settings.APP_NAME} v{settings.APP_VERSION} starting up...")
     print(f"   Environment: {settings.APP_ENV}")
     try:
+        try:
+            async with engine.connect() as raw_conn:
+                raw_conn = await raw_conn.execution_options(isolation_level="AUTOCOMMIT")
+                for r in ['CENTRAL_ADMIN', 'LA_OFFICER', 'PROJECT_AGENCY', 'POLICY_ANALYST']:
+                    try:
+                        await raw_conn.execute(text(f"ALTER TYPE user_role ADD VALUE IF NOT EXISTS '{r}'"))
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+
         async with engine.begin() as conn:
             await conn.run_sync(Base.metadata.create_all)
+            await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS agency_name VARCHAR(255)"))
+            await conn.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS assigned_project_ids VARCHAR(1024)"))
+            await conn.execute(text("""
+                ALTER TABLE projects 
+                    ADD COLUMN IF NOT EXISTS notification_3a_date DATE,
+                    ADD COLUMN IF NOT EXISTS notification_3d_date DATE,
+                    ADD COLUMN IF NOT EXISTS delay_months INTEGER,
+                    ADD COLUMN IF NOT EXISTS delay_reason TEXT,
+                    ADD COLUMN IF NOT EXISTS legal_case_count INTEGER DEFAULT 0,
+                    ADD COLUMN IF NOT EXISTS legal_case_status VARCHAR(50) DEFAULT 'NONE',
+                    ADD COLUMN IF NOT EXISTS milestone_data_status VARCHAR(50) DEFAULT 'SYNTHETIC_DEMO',
+                    ADD COLUMN IF NOT EXISTS latitude NUMERIC(9, 6),
+                    ADD COLUMN IF NOT EXISTS longitude NUMERIC(9, 6),
+                    ADD COLUMN IF NOT EXISTS lacrris_integration_status VARCHAR(50) DEFAULT 'PLANNED'
+            """))
+            await conn.execute(text("ALTER TABLE projects ALTER COLUMN district_codes TYPE TEXT[]"))
         print("   ✅ Database tables & PostGIS schema verified")
     except Exception as e:
         print(f"   ⚠️  Database auto-migration warning: {e}")
@@ -107,7 +134,13 @@ app = FastAPI(
 # ─── CORS ─────────────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
+    allow_origins=settings.cors_origins + [
+        "http://localhost:5174",
+        "http://127.0.0.1:5174",
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_origin_regex=r"https?://.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

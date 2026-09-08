@@ -5,7 +5,16 @@
 import axios, { AxiosError, type InternalAxiosRequestConfig } from 'axios'
 import { useAuthStore } from '@/store/authStore'
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+const getBaseUrl = () => {
+  if (typeof window !== 'undefined') {
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      return `http://${window.location.hostname}:8000`
+    }
+  }
+  return import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+}
+
+const BASE_URL = getBaseUrl()
 
 export const apiClient = axios.create({
   baseURL: BASE_URL,
