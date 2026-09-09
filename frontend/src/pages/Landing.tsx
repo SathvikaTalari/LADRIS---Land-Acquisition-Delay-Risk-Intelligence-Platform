@@ -278,30 +278,30 @@ export default function Landing() {
               </button>
             ))}
             {/* Globe / Language */}
-            <button title="Language" style={{ display:'flex',alignItems:'center',justifyContent:'center', width:28,height:28,borderRadius:5,background:'none', border:`1px solid ${isDark?'rgba(255,255,255,0.1)':'#e2e8f0'}`, cursor:'pointer',color:isDark?'#6b84a8':'#64748b',transition:'all 0.15s' }}
-              onMouseEnter={e=>{e.currentTarget.style.color=isDark?'#c9d8f0':'#003366';e.currentTarget.style.borderColor=isDark?'rgba(255,255,255,0.28)':'#003366';e.currentTarget.style.background=isDark?'rgba(255,255,255,0.06)':'rgba(0,51,102,0.05)'}}
-              onMouseLeave={e=>{e.currentTarget.style.color=isDark?'#6b84a8':'#64748b';e.currentTarget.style.borderColor=isDark?'rgba(255,255,255,0.1)':'#e2e8f0';e.currentTarget.style.background='none'}}
+            <button title="Language" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 5, background: 'none', border: `1px solid ${isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0'}`, cursor: 'pointer', color: isDark ? '#6b84a8' : '#64748b', transition: 'all 0.15s' }}
+              onMouseEnter={e => { e.currentTarget.style.color = isDark ? '#c9d8f0' : '#003366'; e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.28)' : '#003366'; e.currentTarget.style.background = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,51,102,0.05)' }}
+              onMouseLeave={e => { e.currentTarget.style.color = isDark ? '#6b84a8' : '#64748b'; e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0'; e.currentTarget.style.background = 'none' }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>
             </button>
             {/* Accessibility */}
-            <button title="Accessibility" style={{ display:'flex',alignItems:'center',justifyContent:'center', width:28,height:28,borderRadius:5,background:'none', border:`1px solid ${isDark?'rgba(255,255,255,0.1)':'#e2e8f0'}`, cursor:'pointer',color:isDark?'#6b84a8':'#64748b',transition:'all 0.15s' }}
-              onMouseEnter={e=>{e.currentTarget.style.color=isDark?'#c9d8f0':'#003366';e.currentTarget.style.borderColor=isDark?'rgba(255,255,255,0.28)':'#003366';e.currentTarget.style.background=isDark?'rgba(255,255,255,0.06)':'rgba(0,51,102,0.05)'}}
-              onMouseLeave={e=>{e.currentTarget.style.color=isDark?'#6b84a8':'#64748b';e.currentTarget.style.borderColor=isDark?'rgba(255,255,255,0.1)':'#e2e8f0';e.currentTarget.style.background='none'}}
+            <button title="Accessibility" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 5, background: 'none', border: `1px solid ${isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0'}`, cursor: 'pointer', color: isDark ? '#6b84a8' : '#64748b', transition: 'all 0.15s' }}
+              onMouseEnter={e => { e.currentTarget.style.color = isDark ? '#c9d8f0' : '#003366'; e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.28)' : '#003366'; e.currentTarget.style.background = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,51,102,0.05)' }}
+              onMouseLeave={e => { e.currentTarget.style.color = isDark ? '#6b84a8' : '#64748b'; e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0'; e.currentTarget.style.background = 'none' }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="5" r="1.5"/><path d="m9 12 1.5 5.5M15 12l-1.5 5.5M9 12l-2-3.5M15 12l2-3.5M9 12h6"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="5" r="1.5" /><path d="m9 12 1.5 5.5M15 12l-1.5 5.5M9 12l-2-3.5M15 12l2-3.5M9 12h6" /></svg>
             </button>
             {/* Help */}
-            <button title="Help" style={{ display:'flex',alignItems:'center',justifyContent:'center', width:28,height:28,borderRadius:5,background:'none', border:`1px solid ${isDark?'rgba(255,255,255,0.1)':'#e2e8f0'}`, cursor:'pointer',color:isDark?'#6b84a8':'#64748b',transition:'all 0.15s' }}
-              onMouseEnter={e=>{e.currentTarget.style.color=isDark?'#c9d8f0':'#003366';e.currentTarget.style.borderColor=isDark?'rgba(255,255,255,0.28)':'#003366';e.currentTarget.style.background=isDark?'rgba(255,255,255,0.06)':'rgba(0,51,102,0.05)'}}
-              onMouseLeave={e=>{e.currentTarget.style.color=isDark?'#6b84a8':'#64748b';e.currentTarget.style.borderColor=isDark?'rgba(255,255,255,0.1)':'#e2e8f0';e.currentTarget.style.background='none'}}
+            <button title="Help" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 5, background: 'none', border: `1px solid ${isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0'}`, cursor: 'pointer', color: isDark ? '#6b84a8' : '#64748b', transition: 'all 0.15s' }}
+              onMouseEnter={e => { e.currentTarget.style.color = isDark ? '#c9d8f0' : '#003366'; e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.28)' : '#003366'; e.currentTarget.style.background = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,51,102,0.05)' }}
+              onMouseLeave={e => { e.currentTarget.style.color = isDark ? '#6b84a8' : '#64748b'; e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0'; e.currentTarget.style.background = 'none' }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><circle cx="12" cy="17" r="0.5" fill="currentColor" /></svg>
             </button>
             {/* Theme toggle */}
-            <button title={isDark ? 'Light mode' : 'Dark mode'} onClick={toggleTheme} style={{ display:'flex',alignItems:'center',justifyContent:'center', width:28,height:28,borderRadius:5,background:'none', border:`1px solid ${isDark?'rgba(255,255,255,0.1)':'#e2e8f0'}`, cursor:'pointer',color:isDark?'#6b84a8':'#64748b',transition:'all 0.15s' }}
-              onMouseEnter={e=>{e.currentTarget.style.color=isDark?'#facc15':'#003366';e.currentTarget.style.borderColor=isDark?'rgba(250,204,21,0.4)':'#003366';e.currentTarget.style.background=isDark?'rgba(250,204,21,0.08)':'rgba(0,51,102,0.05)'}}
-              onMouseLeave={e=>{e.currentTarget.style.color=isDark?'#6b84a8':'#64748b';e.currentTarget.style.borderColor=isDark?'rgba(255,255,255,0.1)':'#e2e8f0';e.currentTarget.style.background='none'}}
+            <button title={isDark ? 'Light mode' : 'Dark mode'} onClick={toggleTheme} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 5, background: 'none', border: `1px solid ${isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0'}`, cursor: 'pointer', color: isDark ? '#6b84a8' : '#64748b', transition: 'all 0.15s' }}
+              onMouseEnter={e => { e.currentTarget.style.color = isDark ? '#facc15' : '#003366'; e.currentTarget.style.borderColor = isDark ? 'rgba(250,204,21,0.4)' : '#003366'; e.currentTarget.style.background = isDark ? 'rgba(250,204,21,0.08)' : 'rgba(0,51,102,0.05)' }}
+              onMouseLeave={e => { e.currentTarget.style.color = isDark ? '#6b84a8' : '#64748b'; e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.1)' : '#e2e8f0'; e.currentTarget.style.background = 'none' }}
             >
               {isDark ? <Sun size={13} /> : <Moon size={13} />}
             </button>
@@ -425,7 +425,7 @@ export default function Landing() {
               >
                 {/* GitHub SVG icon */}
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
-                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
                 </svg>
                 GitHub
               </motion.button>
@@ -1108,7 +1108,7 @@ export default function Landing() {
                 }}>
                   {role.title}
                 </div>
-                
+
                 <div style={{
                   fontSize: '0.8rem', lineHeight: 1.6,
                   color: colors.sectionText,
@@ -1119,6 +1119,295 @@ export default function Landing() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* ════ 4-TIER ARCHITECTURE SECTION ════ */}
+      <section style={{
+        background: isDark
+          ? 'linear-gradient(160deg, #07111f 0%, #0a1a30 60%, #060f1e 100%)'
+          : 'linear-gradient(160deg, #eef3fb 0%, #f5f8fd 60%, #e8eef8 100%)',
+        padding: '96px 40px',
+        position: 'relative',
+        overflow: 'hidden',
+      }}>
+        {/* Background decorative grid */}
+        <div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          backgroundImage: isDark
+            ? 'linear-gradient(rgba(64,128,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(64,128,255,0.04) 1px, transparent 1px)'
+            : 'linear-gradient(rgba(0,51,102,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,51,102,0.04) 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+        }} />
+
+        <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative' }}>
+
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.6 }}
+            style={{ textAlign: 'center', marginBottom: 72 }}
+          >
+            {/* Badge */}
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+              background: isDark ? 'rgba(64,128,255,0.12)' : 'rgba(0,51,102,0.07)',
+              border: `1px solid ${isDark ? 'rgba(64,128,255,0.28)' : 'rgba(0,51,102,0.16)'}`,
+              borderRadius: 100, padding: '6px 18px',
+              marginBottom: 20,
+            }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke={isDark ? '#7daaff' : '#3b5fa0'} strokeWidth="2"
+                strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <path d="M8 21h8m-4-4v4" />
+              </svg>
+              <span style={{
+                fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                color: isDark ? '#7daaff' : '#3b5fa0',
+              }}>Platform Architecture</span>
+            </div>
+
+            <h2 style={{
+              fontSize: 'clamp(1.7rem, 3vw, 2.4rem)',
+              fontWeight: 900, letterSpacing: '-0.03em',
+              color: colors.sectionTitle, marginBottom: 16, lineHeight: 1.15,
+            }}>
+              System Architecture
+            </h2>
+            <p style={{
+              fontSize: '1rem', color: colors.sectionText,
+              maxWidth: 620, margin: '0 auto', lineHeight: 1.75,
+            }}>
+              LADRIS is built on a robust four-layer architecture engineered for high-throughput
+              government operations — from raw data ingestion to AI-powered insights on the dashboard.
+            </p>
+          </motion.div>
+
+          {/* Tier cards — horizontal flow on desktop, vertical on mobile */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: 0,
+            position: 'relative',
+          }}
+            className="arch-tier-grid"
+          >
+            {[
+              {
+                tier: '01',
+                label: 'Data Layer',
+                subtitle: 'Ingestion & Storage',
+                color: '#f47721',
+                glowColor: 'rgba(244,119,33,0.18)',
+                borderColor: 'rgba(244,119,33,0.35)',
+                icon: (
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                  </svg>
+                ),
+                items: ['PostgreSQL + PostGIS', 'GIS / Census 2011', 'BhoomiRashi Portal', 'data.gov.in API'],
+              },
+              {
+                tier: '02',
+                label: 'Processing Layer',
+                subtitle: 'ETL & Computation',
+                color: '#4080ff',
+                glowColor: 'rgba(64,128,255,0.18)',
+                borderColor: 'rgba(64,128,255,0.35)',
+                icon: (
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83" />
+                  </svg>
+                ),
+                items: ['ETL Pipeline (3 Phases)', 'Risk Score Engine', 'Spatial Computations', 'Data Validation'],
+              },
+              {
+                tier: '03',
+                label: 'Intelligence Layer',
+                subtitle: 'AI / ML & APIs',
+                color: '#7c5cfc',
+                glowColor: 'rgba(124,92,252,0.18)',
+                borderColor: 'rgba(124,92,252,0.35)',
+                icon: (
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2a5 5 0 0 1 5 5v4a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5z" />
+                    <path d="M8 21v-2a4 4 0 0 1 8 0v2" />
+                    <path d="M2 14h2m16 0h2" />
+                  </svg>
+                ),
+                items: ['FastAPI Backend', 'ML Risk Predictor', 'WebSocket Alerts', 'REST / GraphQL'],
+              },
+              {
+                tier: '04',
+                label: 'Presentation Layer',
+                subtitle: 'UI & Visualisation',
+                color: '#00b894',
+                glowColor: 'rgba(0,184,148,0.18)',
+                borderColor: 'rgba(0,184,148,0.35)',
+                icon: (
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2" />
+                    <path d="M8 21h8m-4-4v4" />
+                  </svg>
+                ),
+                items: ['React + Vite SPA', 'MapLibre GL Maps', 'Recharts Analytics', 'RBAC Role Views'],
+              },
+            ].map((tier, i) => (
+              <motion.div
+                key={tier.tier}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: i * 0.12 }}
+                style={{ position: 'relative', display: 'flex' }}
+              >
+                {/* Connector arrow between tiers (except last) */}
+                {i < 3 && (
+                  <div style={{
+                    position: 'absolute', right: -1, top: '50%',
+                    transform: 'translateY(-50%)',
+                    zIndex: 10, display: 'flex', alignItems: 'center',
+                  }}>
+                    <div style={{
+                      width: 22, height: 2,
+                      background: `linear-gradient(90deg, ${tier.color}, ${[
+                        '#4080ff', '#7c5cfc', '#00b894', '#4080ff'
+                      ][i]})`,
+                      opacity: 0.6,
+                    }} />
+                    <svg width="10" height="10" viewBox="0 0 10 10" style={{ flexShrink: 0 }}>
+                      <path d="M1 5h8M6 2l3 3-3 3" stroke={tier.color} strokeWidth="1.6"
+                        strokeLinecap="round" strokeLinejoin="round" fill="none" opacity="0.8" />
+                    </svg>
+                  </div>
+                )}
+
+                {/* Tier Card */}
+                <motion.div
+                  whileHover={{ translateY: -5, boxShadow: `0 16px 48px ${tier.glowColor}` }}
+                  transition={{ duration: 0.22 }}
+                  style={{
+                    flex: 1,
+                    margin: '0 10px',
+                    background: isDark
+                      ? `linear-gradient(145deg, rgba(10,24,42,0.98) 0%, rgba(8,18,36,0.95) 100%)`
+                      : 'rgba(255,255,255,0.92)',
+                    border: `1px solid ${tier.borderColor}`,
+                    borderRadius: 16,
+                    padding: '32px 24px',
+                    boxShadow: isDark
+                      ? `0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)`
+                      : `0 4px 20px rgba(0,51,102,0.07)`,
+                    display: 'flex', flexDirection: 'column',
+                    cursor: 'default',
+                    backdropFilter: 'blur(8px)',
+                    transition: 'all 0.22s ease',
+                  }}
+                >
+                  {/* Tier number + icon */}
+                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20 }}>
+                    <div style={{
+                      width: 52, height: 52, borderRadius: 12,
+                      background: isDark ? `${tier.glowColor}` : `${tier.glowColor}`,
+                      border: `1px solid ${tier.borderColor}`,
+                      color: tier.color,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      flexShrink: 0,
+                    }}>
+                      {tier.icon}
+                    </div>
+                    <div style={{
+                      fontSize: '2.2rem', fontWeight: 900, lineHeight: 1,
+                      color: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.05)',
+                      letterSpacing: '-0.04em',
+                      fontVariantNumeric: 'tabular-nums',
+                    }}>
+                      {tier.tier}
+                    </div>
+                  </div>
+
+                  {/* Title block */}
+                  <div style={{
+                    fontSize: '1rem', fontWeight: 800,
+                    color: colors.sectionTitle, marginBottom: 4,
+                    letterSpacing: '-0.02em',
+                  }}>
+                    {tier.label}
+                  </div>
+                  <div style={{
+                    fontSize: '0.75rem', fontWeight: 600,
+                    color: tier.color, marginBottom: 20,
+                    textTransform: 'uppercase', letterSpacing: '0.06em',
+                  }}>
+                    {tier.subtitle}
+                  </div>
+
+                  {/* Tech items */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 'auto' }}>
+                    {tier.items.map(item => (
+                      <div key={item} style={{
+                        display: 'flex', alignItems: 'center', gap: 10,
+                      }}>
+                        <div style={{
+                          width: 6, height: 6, borderRadius: '50%',
+                          background: tier.color, flexShrink: 0, opacity: 0.85,
+                        }} />
+                        <span style={{
+                          fontSize: '0.8rem', color: colors.sectionText,
+                          lineHeight: 1.4,
+                        }}>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Bottom accent bar */}
+                  <div style={{
+                    marginTop: 24, height: 3, borderRadius: 2,
+                    background: `linear-gradient(90deg, ${tier.color}, transparent)`,
+                    opacity: 0.5,
+                  }} />
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Data flow caption */}
+          <motion.div
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+            viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.5 }}
+            style={{
+              textAlign: 'center', marginTop: 48,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+            }}
+          >
+            <div style={{ height: 1, width: 60, background: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' }} />
+            <span style={{ fontSize: '0.78rem', color: colors.sectionText, letterSpacing: '0.04em' }}>
+              Bidirectional data flow — from ground truth to intelligence, in real time
+            </span>
+            <div style={{ height: 1, width: 60, background: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' }} />
+          </motion.div>
+        </div>
+
+        {/* Responsive style for mobile grid */}
+        <style>{`
+          @media (max-width: 900px) {
+            .arch-tier-grid {
+              grid-template-columns: repeat(2, 1fr) !important;
+            }
+          }
+          @media (max-width: 540px) {
+            .arch-tier-grid {
+              grid-template-columns: 1fr !important;
+            }
+          }
+        `}</style>
       </section>
 
       {/* ════ FOOTER ════ */}
@@ -1185,8 +1474,8 @@ export default function Landing() {
               {/* Email */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-                  <rect x="2" y="4" width="20" height="16" rx="2"/>
-                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                  <rect x="2" y="4" width="20" height="16" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                 </svg>
                 <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>
                   support@ladris.gov.in
@@ -1195,8 +1484,8 @@ export default function Landing() {
               {/* Location */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-                  <circle cx="12" cy="10" r="3"/>
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                  <circle cx="12" cy="10" r="3" />
                 </svg>
                 <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>
                   New Delhi, India
@@ -1205,7 +1494,7 @@ export default function Landing() {
               {/* Phone */}
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.61 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.16 6.16l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
                 <span style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)' }}>
                   +91-11-2338-XXXX (Ministry Helpline)
