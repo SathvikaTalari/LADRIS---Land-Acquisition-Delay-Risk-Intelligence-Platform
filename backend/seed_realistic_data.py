@@ -113,6 +113,25 @@ CITIES = ["Delhi", "Mumbai", "Chennai", "Kolkata", "Bangalore", "Hyderabad", "Pu
 async def seed_realistic_data():
     print("Seeding diverse national infrastructure projects into LADRIS database...")
     async with AsyncSessionLocal() as db:
+        # Ensure extended schema columns exist on projects table
+        await db.execute(text("""
+            ALTER TABLE projects 
+                ADD COLUMN IF NOT EXISTS notification_3a_date DATE,
+                ADD COLUMN IF NOT EXISTS notification_3d_date DATE,
+                ADD COLUMN IF NOT EXISTS delay_months INTEGER,
+                ADD COLUMN IF NOT EXISTS delay_reason TEXT,
+                ADD COLUMN IF NOT EXISTS legal_case_count INTEGER DEFAULT 0,
+                ADD COLUMN IF NOT EXISTS legal_case_status VARCHAR(50) DEFAULT 'NONE',
+                ADD COLUMN IF NOT EXISTS milestone_data_status VARCHAR(50) DEFAULT 'SYNTHETIC_DEMO',
+                ADD COLUMN IF NOT EXISTS latitude NUMERIC(9, 6),
+                ADD COLUMN IF NOT EXISTS longitude NUMERIC(9, 6),
+                ADD COLUMN IF NOT EXISTS lacrris_integration_status VARCHAR(50) DEFAULT 'PLANNED'
+        """))
+        await db.execute(text("ALTER TABLE projects ALTER COLUMN district_codes TYPE TEXT[]"))
+        await db.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS agency_name VARCHAR(255)"))
+        await db.execute(text("ALTER TABLE users ADD COLUMN IF NOT EXISTS assigned_project_ids VARCHAR(1024)"))
+        await db.commit()
+
         # Get districts to map projects to via raw SQL
         result = await db.execute(text("SELECT district_name, state_code FROM districts"))
         districts = [{"district_name": row[0], "state_code": row[1]} for row in result.all()]
@@ -124,6 +143,7 @@ async def seed_realistic_data():
         new_projects = []
         # Clear existing seeded projects
         await db.execute(text("DELETE FROM projects WHERE milestone_data_status = 'REALISTIC_SNAPSHOT'"))
+        await db.commit()
         
         for i in range(250):
             district = random.choice(districts)
