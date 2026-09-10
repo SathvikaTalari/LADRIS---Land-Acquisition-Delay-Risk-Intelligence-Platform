@@ -30,17 +30,39 @@ class Settings(BaseSettings):
     POSTGRES_PASSWORD: str = "landpulse_pass"
 
     @property
+    def effective_host(self) -> str:
+        host = self.POSTGRES_HOST
+        if host == "db":
+            try:
+                import socket
+                socket.gethostbyname("db")
+            except OSError:
+                return "localhost"
+        return host
+
+    @property
+    def effective_port(self) -> int:
+        if self.effective_host in ("localhost", "127.0.0.1") and self.POSTGRES_PORT == 5432:
+            try:
+                import socket
+                with socket.create_connection(("127.0.0.1", 15432), timeout=0.3):
+                    return 15432
+            except OSError:
+                pass
+        return self.POSTGRES_PORT
+
+    @property
     def DATABASE_URL(self) -> str:
         return (
             f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
-            f"@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+            f"@{self.effective_host}:{self.effective_port}/{self.POSTGRES_DB}"
         )
 
     @property
     def SYNC_DATABASE_URL(self) -> str:
         return (
             f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}"
-            f"@{self.POSTGRES_HOST}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+            f"@{self.effective_host}:{self.effective_port}/{self.POSTGRES_DB}"
         )
 
     # ─── JWT ──────────────────────────────────────────────────────────────────
