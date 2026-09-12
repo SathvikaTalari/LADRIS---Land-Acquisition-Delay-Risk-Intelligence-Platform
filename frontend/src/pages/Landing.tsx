@@ -796,22 +796,9 @@ export default function Landing() {
 
             <p style={{
               fontSize: '0.95rem', lineHeight: 1.8,
-              color: colors.sectionText, marginBottom: 24,
-            }}>
-              LADRIS is an AI-driven land acquisition intelligence and risk-management platform
-              designed for India's national infrastructure programs. By integrating high-frequency
-              cadastral telemetry, cloud analytics, machine-learning models, and an interactive GIS
-              twin, LADRIS delivers real-time parcel-level risk scores, AI recommendations,
-              and predictive alerts to reduce acquisition delays and minimise litigation.
-            </p>
-            <p style={{
-              fontSize: '0.95rem', lineHeight: 1.8,
               color: colors.sectionText, marginBottom: 36,
             }}>
-              The platform is built to government security standards and role-based access control,
-              enabling safe deployments for Central Ministries, State Nodal Authorities, District
-              Collectors, LA Officers, and Project Agencies — providing auditable, end-to-end
-              acquisition intelligence.
+              LADRIS AI is an AI-powered decision-support platform for land acquisition. It studies historical and live project data, predicts delay probability, finds the main risk factors, shows risky projects on GIS maps, sends alerts and recommends preventive actions.
             </p>
 
             {/* CTA pair */}
